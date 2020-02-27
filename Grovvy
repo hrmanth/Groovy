@@ -31,14 +31,14 @@ pipeline {
     stage('Remove Unused docker image') {
       steps{
         sh "docker rmi $registry:$BUILD_NUMBER"
-        sh "docker run -d --name tomcat -p 8080:8080 tomcat:8.0"
+        sh "docker-compose up -d"
       }
     }
     stage('upload war to nexus'){
        steps{
             nexusArtifactUploader artifacts: [
                 [
-                    artifactId: 'Inspired',
+                    artifactId: 'India',
                     classifier: '',
                     file: 'gameoflife-web/target/gameoflife.war',
                     type: 'war'
@@ -47,11 +47,11 @@ pipeline {
            ], 
                    
            credentialsId: 'Nexus',
-           groupId: 'Inspired',
-           nexusUrl: '3.134.114.169:8081/nexus',
+           groupId: 'India',
+           nexusUrl: '18.218.141.77:8081/nexus',
            nexusVersion: 'NEXUS2',
            protocol: 'http',
-           repository: 'Inspired', 
+           repository: 'India', 
            version: '$BUILD_ID'
            }
          }
